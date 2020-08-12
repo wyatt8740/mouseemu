@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+#export DH_OPTIONS=-v
+
+%:
+	dh  $@
+
+DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+ifneq (,$(findstring :$(DEB_HOST_ARCH):,:i386:amd64:armhf:))
+dmidecode := dmidecode
+else
+dmidecode :=
+endif
+
+override_dh_gencontrol:
+	dh_gencontrol -- -V'dmidecode-depends=$(dmidecode)'

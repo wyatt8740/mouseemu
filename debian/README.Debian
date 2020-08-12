@@ -1,0 +1,13 @@
+Mouseemu uses uinput which is accessible through 
+/dev/input/uinput. If you don't already have this
+device and are not using either udev or devfs you
+have to create this device node by calling
+
+cd /dev ; ./MAKEDEV uinput
+
+The postinst script should create the device node
+for you upon the first installation of mouseemu. So
+this is only necessary in unusual situations or if 
+you manually delete the device node.
+
+ -- Gaudenz Steinlin <gaudenz@debian.org>, Wed Mar 30 03:07:15 2005

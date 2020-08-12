@@ -1,0 +1,60 @@
+.TH MOUSEEMU 8 2005-03-29 
+.SH NAME
+mouseemu \- Emulate mouse buttons and mouse wheel
+
+.SH SYNOPSIS
+.B mouseemu 
+.RI [options]
+
+.SH DESCRIPTION
+.PP
+.B Mouseemu
+is a daemon to emulate mouse buttons on trackpads with only 
+one button. 
+It lets you:
+.br
+  - emulate middle and right click
+.br
+  - emulate mouse wheel
+.br
+  - block trackpad while typing
+.PP
+It was initially developed for Apple PowerBooks
+and iBooks, but it may be useful on other architectures
+as well. 
+.PP
+This program only works when booting a 2.6 kernel because
+it uses the new uinput interface to emulate the mouse.
+.PP
+
+.SH OPTIONS
+.TP
+.B -middle B2_MOD B2_KEY
+modifier and key for the middle (second) mouse button
+.TP
+.B -right B3_MOD B3_KEY
+modifier and key for the right (third) mouse button
+.TP
+.B -scroll SCROLL_MOD
+modifier for the scrolling function
+.TP
+.B -typing-block DELAY
+Time in milliseconds for which the trackpad will be blocked while typing on the keyboard.
+.TP
+.B -device UINPUT
+device node for the uinput device
+.TP
+.B -nofork
+don't run in the background
+
+.SH AUTHOR
+Mouseemu was written by  Colin Leroy 
+.nh 
+<colin@colino.net>.
+.hy
+This manpage was originally written by Gaudenz Steinlin
+.nh
+<gaudenz@debian.org>
+.hy
+for the Debian Project, but may be used by others under the
+terms of the GNU General Public License.

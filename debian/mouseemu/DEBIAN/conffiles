@@ -1,0 +1,3 @@
+/etc/default/mouseemu
+/etc/init.d/mouseemu
+/etc/udev/mouseemu.rules

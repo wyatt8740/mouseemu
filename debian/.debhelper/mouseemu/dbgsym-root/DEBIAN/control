@@ -1,0 +1,12 @@
+Package: mouseemu-dbgsym
+Source: mouseemu
+Version: 0.15-10
+Auto-Built-Package: debug-symbols
+Architecture: powerpc
+Maintainer: Debian QA Group <packages@qa.debian.org>
+Installed-Size: 30
+Depends: mouseemu (= 0.15-10)
+Section: debug
+Priority: optional
+Description: debug symbols for mouseemu
+Build-Ids: 01748fa207ac871101c43e18af84a8e4b2621b87

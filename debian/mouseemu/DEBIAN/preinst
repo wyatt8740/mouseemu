@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+
+# if upgrading from version below 0.15-3 
+# give mouseemu some time to terminate
+if [ "$1" = "upgrade" ] && dpkg --compare-versions "$2" le 0.15-3 ; then
+	sleep 5
+fi
+
+

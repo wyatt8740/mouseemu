@@ -1,0 +1,31 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License v2
+
+#MID_CLICK="-middle 0 68"         #F10 with no modifier
+#RIGHT_CLICK="-right 0 125"       #Command with no modifier
+#SCROLL="-scroll 56"              #Option 
+#TYPING_BLOCK="-typing-block 300" #block mouse for 300ms after a keypress
+
+depend() {
+	use logger
+}
+
+start() {
+	ebegin "Starting mouseemu"
+	# Source configuration file /etc/mouseemu.conf
+	if [ -f /etc/mouseemu.conf ] ; then
+	       . /etc/mouseemu.conf
+	fi
+	start-stop-daemon --start --quiet \
+		--exec /usr/sbin/mouseemu -- \
+			$MID_CLICK $RIGHT_CLICK $SCROLL $TYPING_BLOCK > /var/log/mouseemu.log
+
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping mouseemu"
+	start-stop-daemon --stop --quiet --exec /usr/sbin/mouseemu
+	eend $?
+}

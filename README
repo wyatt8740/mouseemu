@@ -1,0 +1,33 @@
+0) specify the default keys you want in defkeys.h
+1) run `make`
+2) as root run `make install`
+3) as root run `mouseemu` (`mouseemu -help`)
+
+This mouse button emulation tool lets you 
+- emulate middle and right click
+- emulate wheel
+- block trackpad while typing
+
+This is done in userland, and requires a 2.6 kernel with uinput support.
+Parameters are specifiable via command-line.
+
+Scroll problems ? mouse Protocol in XF86Config should be set to ExplorerPS/2.
+HTH
+Colin
+
+
+Changes:
+0.15 Integrate patch by Danny Tholen to suppress keypresses when it's the button
+key. Integrate patch by Gaudenz Steinlin to handle DESTDIR in make install. Integrate man page by Gaudenz, too. Thank you both!
+0.14 More scroll fixes
+0.13 Fixes stuff with wheel emulation
+0.12 Don't block trackpad when key pressed is a modifier
+0.11 Daemonize by default
+0.10 Fix compile error, better messages.
+0.9  try /dev/uinput, /dev/input/uinput, /dev/misc/uinput.
+0.8  bugfix trackpad blocking
+0.7  block trackpad while typing, nicer options
+0.6  grab mouse input channel (fixes mod+click, cleaner wheel emu)
+     thanks to Nicholas Hemsley
+0.5  fixes
+0.4  wheel emulation

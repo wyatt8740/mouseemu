@@ -1,0 +1,66 @@
+#! /bin/sh
+#
+# init.d script for mouseemu
+
+### BEGIN INIT INFO
+# Provides:          mouseemu
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Should-Start:      udev $syslog
+# Should-Stop:       udev $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Emulate mouse buttons and mouse wheel
+# Description:       Mouseemu is a daemon to emulate mouse buttons on trackpads
+#                    with only one button. It lets you:
+#                      - emulate middle and right click
+#                      - emulate mouse wheel
+#                      - block trackpad while typing
+#              
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/mouseemu
+NAME=mouseemu
+DESC="mouse emulation daemon"
+
+test -x $DAEMON || exit 0
+
+. /lib/lsb/init-functions
+
+# Include mouseemu defaults if available
+if [ -f /etc/default/mouseemu ] ; then
+	. /etc/default/mouseemu
+	MOUSEEMU_OPTS="$MID_CLICK $RIGHT_CLICK $SCROLL $TYPING_BLOCK"
+fi
+
+set -e
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: "
+	modprobe -q uinput || true
+	# Give udev some time to create the device node
+	sleep 1
+	start-stop-daemon --start --quiet --exec $DAEMON -- $MOUSEEMU_OPTS >/dev/null
+	echo "$NAME."
+	;;
+  stop)
+	echo -n "Stopping $DESC: "
+	start-stop-daemon --stop --oknodo --retry 3 --quiet --exec $DAEMON >/dev/null
+	echo "$NAME."
+	;;
+  restart|force-reload)
+	echo -n "Restarting $DESC: "
+	start-stop-daemon --stop --oknodo --retry 3 --quiet --exec $DAEMON >/dev/null
+	start-stop-daemon --start --quiet --exec $DAEMON -- $MOUSEEMU_OPTS >/dev/null
+	echo "$NAME."
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	echo "Usage: $N {start|stop|restart|force-reload}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

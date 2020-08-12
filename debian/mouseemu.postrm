@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+#DEBHELPER#
+
+# remove symlink in /etc/udev/rules.d 
+if [ "$1" = "purge" ]; then
+    rm -f /etc/udev/rules.d/025_mouseemu.rules
+    if [ -x /sbin/udevcontrol ] ; then
+        # udevcontrol fails if udev is not running, but installation should not abort
+        udevcontrol reload_rules || true
+    fi
+fi
+

@@ -1,0 +1,98 @@
+.TH MOUSEEMU 8 2005-03-29 
+.SH NAME
+mouseemu \- Emulate mouse buttons and mouse wheel
+
+.SH SYNOPSIS
+.B mouseemu 
+.RI [options]
+
+.SH DESCRIPTION
+.PP
+.B Mouseemu
+is a daemon to emulate mouse buttons on trackpads with only 
+one button. 
+It lets you:
+.br
+  - emulate middle and right click
+.br
+  - emulate mouse wheel
+.br
+  - block trackpad while typing
+.PP
+It was initially developed for Apple PowerBooks
+and iBooks, but it may be useful on other architectures
+as well. 
+.PP
+This program only works when booting a 2.6 kernel because
+it uses the new uinput interface to emulate the mouse.
+.PP
+
+.SH OPTIONS
+.TP
+.B -middle B2_MOD B2_KEY
+Modifier and key for the middle (second) mouse button. Defaults to F10 and no modifier
+on PowerPC and Intel Macs, and to none on all other architectures.
+.TP
+.B -right B3_MOD B3_KEY
+Modifier and key for the right (third) mouse button. Defaults to F11 and no modifier
+on PowerPC and Intel Macs, and to none on all other architectures.
+.TP
+.B -scroll SCROLL_MOD
+Modifier for the scrolling function. Defaults to Alt.
+.TP
+.B -typing-block DELAY
+Time in milliseconds for which the trackpad will be blocked while typing on the keyboard.
+Defaults to 300ms.
+.TP
+.B -device UINPUT
+Device node for the uinput device. Defaults to /dev/uinput. If this device is not read and 
+writeable the following devices are also tried: /dev/uinput, /dev/input/uinput and 
+/dev/misc/uinput.
+.TP
+.B -nofork
+don't run in the background
+.TP
+.B -autorescan
+Automatically scan every 5s for new devices. This is normally not need, as udev should
+inform mouseemu about new devices.
+.TP
+.B -debug
+print debugging messages about device scans
+.TP
+.B -help
+show usage message
+.PP
+The key codes for the buttons and modifiers are key scancodes. They can be found in 
+include/linux/input.h in the kernel headers or by using `showkey` in a console. The 
+keycodes must be given as decimal values (`showkey` displays hex values!).
+.PP
+Mouseemu does normally not automatically scan for new devices. An udev rule is used
+to trigger a rescan when new devices are connected. You can also trigger a rescan
+manually by sending a HUP signal to the mouseemu process.
+.SH EXAMPLES
+.PP
+To have the same behaviour as in MacOS X (CTRL-click for right mouse button and no
+emulation for the middle button):
+.PP
+.RS 4
+.B mouseemu -middle 0 0 -right 29 272
+.RE
+.PP
+The code for the (left) mouse button is 272 (0x110 in hex). The code for CTRL is 29. 
+.PP
+Trigger a rescan for newly attached devices:
+.PP
+.RS 4
+.B kill -HUP `cat /var/run/mouseemu.pid`
+.RE
+.SH AUTHOR
+Mouseemu was written by  Colin Leroy 
+.nh 
+<colin@colino.net>.
+.hy
+This manpage was originally written by Gaudenz Steinlin
+.nh
+<gaudenz@debian.org>
+.hy
+for the Debian Project, but may be used by others under the
+terms of the GNU General Public License.

@@ -1,0 +1,137 @@
+mouseemu (0.15-10) unstable; urgency=low
+
+  * QA upload.
+  * Convert to 3.0 (quilt) format.
+  * Maintainer field set to QA Group.
+  * Bump Standards-Version to 3.9.5.
+  * Build with default compiler flags (patches/default_buildflags.patch).
+  * Source /lib/lsb/init-functions in init script.
+  * Set debhelper compatibility level to 9.
+  * Add copyright notice.
+
+ -- Emanuele Rocca <ema@debian.org>  Wed, 05 Mar 2014 14:08:27 +0100
+
+mouseemu (0.15-9) unstable; urgency=low
+
+  * Add XS-Vcs-Browser control field
+  * Fix keyboard event handling, thanks to Solra Bizna for providing a patch 
+    and David Wlazo for testing the fix. (Closes: #571604)
+
+ -- Gaudenz Steinlin <gaudenz@debian.org>  Thu, 27 May 2010 22:17:19 +0200
+
+mouseemu (0.15-8.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * check if MAKEDEV should be used (Closes: #563785)
+  * move udev to Should-Start/Stop-Start in init-script as mouseemu doesn't
+    depend on udev
+
+ -- Uli Martens <uli@youam.net>  Fri, 22 Jan 2010 21:42:10 +0100
+
+mouseemu (0.15-8) unstable; urgency=low
+
+  * debian/patches/63_pidfile.dpatch: exit gracefully if pidfile creation
+    fails. Thanks to colin Watson. (Closes: #426020)
+
+ -- Gaudenz Steinlin <gaudenz@debian.org>  Tue, 29 May 2007 18:15:39 +0200
+
+mouseemu (0.15-7) unstable; urgency=low
+
+  * The "The hard work was done by Ubuntu" release
+  * debian/patches/bustype_virtual.dpatch: Use new BUS_VIRTUAL bus type for
+    our uinput devices (Closes: 304734). Thanks to Colin Watson and Ubuntu for
+    this patch.
+  * debian/patches/dual_devices.dpatch: Handle input devices that provide
+    both keyboard and mouse events. Thanks to Colin Watson for the patch.
+    (Closes: 407725)
+  * update debian/patches/61_rescan.dpatch: Block SIGHUP and SIGALRM in the
+    parent. Fix rescan_devs not to skip every other input handler. Taken from
+    Ubuntu.
+  * update debian/patches/41_defaults.dpatch, debian/control, debian/rules, 
+    debian/patches/51_manpage: Enable Mouse Button Emulation by Default on 
+    Intel Macs. Use dmidecode to detect Intel Macs. Code taken from Ubuntu.
+
+ -- Gaudenz Steinlin <gaudenz@debian.org>  Sun, 29 Apr 2007 17:53:10 +0200
+
+mouseemu (0.15-6) unstable; urgency=medium
+
+
+
+   [ Guido Guenther ]
+   * Intialize all fields in uinput_user_dev (initialize_device.dpatch)
+     (closes: #399231)
+   * Fix write error detection (write_error.dpatch)
+
+ -- Gaudenz Steinlin <gaudenz@debian.org>  Sun, 19 Nov 2006 11:37:40 +0100
+
+mouseemu (0.15-5) unstable; urgency=medium
+
+  * don't fail to start if uinput is not compiled as a module (Closes: 393782)
+
+ -- Gaudenz Steinlin <gaudenz@debian.org>  Mon, 30 Oct 2006 12:25:57 +0100
+
+mouseemu (0.15-4) unstable; urgency=low
+
+  * XS-Vcs Field
+  * change pkill into kill $(pidof ...) in mouseemu.rules (Closes: #358655)
+  * check for /sbin/udevcontrol before running it (Closes: #361042)
+  * add /etc/udev/rules.d to package (don't depend on udev beeing installed)
+  * recreate broken syslog patch
+  * send missing uinput error message to stderr instead of syslog (Closes: #369804)
+  * update standards version to 3.7.2, no changes needed
+  * update debhelper compatibility level to 5, depend on debhelper >=5
+  * LSBize init script 
+
+ -- Gaudenz Steinlin <gaudenz@debian.org>  Thu,  5 Oct 2006 02:23:54 +0200
+
+mouseemu (0.15-3) unstable; urgency=low
+
+  * The kudos to Michael Schmitz release!
+  * example section in manpage (closes: #354148)
+  * close all devices and trigger a rescan if a device
+    disapears (closes: #355794, #307068)
+  * rescan for new devices every 5s (off by default)
+  * manually rescan for new devices on HUP
+  * output messages to syslog
+  * create pidfile /var/run/mouseemu.pid
+  * scan up to 32 event devices (closes: #326486)
+  * increase delay between stoping and starting mouseemu
+    on restart to give it more time to stop all processes
+  * add a udev rules file to rescan for new devices
+  * add --retry to start-stop-daemon on stopping to make sure
+    mouseemu really stops
+  * add preinst script to ensure that mouseemu is really stopped
+
+ -- Gaudenz Steinlin <gaudenz@debian.org>  Tue, 14 Mar 2006 02:13:00 +0100
+
+mouseemu (0.15-2) unstable; urgency=medium
+
+  * convert patches to dpatch
+  * passthrough modifier keys (closes: #304328)
+  * improve documentation about default behaviour (closes: #303883).
+  * change default to not emulate mouse buttons on !powerpc
+  * improve usage message
+  * fix -nofork option
+  
+ -- Gaudenz Steinlin <gaudenz@debian.org>  Thu, 21 Apr 2005 01:46:24 +0200
+
+mouseemu (0.15-1) unstable; urgency=low
+
+  * New upstream release
+    - manpage now in upstream tarball
+  * change Makefile to install manpage to
+    /usr/share/man
+
+ -- Gaudenz Steinlin <gaudenz@debian.org>  Thu, 31 Mar 2005 00:04:30 +0200
+
+mouseemu (0.14-1) unstable; urgency=low
+
+  * Initial Release for Debian (Closes: #293240)
+    - Thanks to Guido Guenther for his work on the 
+      inofficial packages!
+  * add manpage for Debian
+  * add init script and default configuration in 
+    /etc/default/mouseemu
+
+ -- Gaudenz Steinlin <gaudenz@debian.org>  Wed, 30 Mar 2005 01:27:12 +0200
+
