@@ -210,8 +210,10 @@ static void mouse_handler (struct input_event inp)
 {
 	if (inp.type != EV_KEY && inp.type != EV_REL && inp.type != EV_SYN)
 		return;
-	if (inp.type == EV_KEY && inp.code != BTN_LEFT && inp.code != BTN_MIDDLE && inp.code != BTN_RIGHT)
-		return;
+        /* fixme: this assumption kills all extra mouse buttons on external mouses */
+        /* need btns 8 and 9 to work */
+	if (inp.type == EV_KEY && inp.code != BTN_LEFT && inp.code != BTN_MIDDLE && inp.code != BTN_RIGHT && inp.code != BTN_SIDE && inp.code != BTN_EXTRA)
+          return;
 
 	if (inp.type == EV_KEY && inp.code == BTN_LEFT) {
 		if (b2_key == BTN_LEFT && b2_mod_pressed)
@@ -523,6 +525,9 @@ int uinput_setup(void)
 	ioctl(ui_mouse_fd, UI_SET_KEYBIT, BTN_LEFT);
 	ioctl(ui_mouse_fd, UI_SET_KEYBIT, BTN_RIGHT);
 	ioctl(ui_mouse_fd, UI_SET_KEYBIT, BTN_MIDDLE);
+        /* need to pass through other buttons on a mouse that's plugged in */
+        ioctl(ui_mouse_fd, UI_SET_KEYBIT, BTN_SIDE);
+        ioctl(ui_mouse_fd, UI_SET_KEYBIT, BTN_EXTRA);
 
 	ioctl(ui_mouse_fd, UI_DEV_CREATE, NULL);
 
