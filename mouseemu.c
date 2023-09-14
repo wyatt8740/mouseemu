@@ -521,6 +521,12 @@ int uinput_setup(void)
 	ioctl(ui_mouse_fd, UI_SET_RELBIT, REL_X);
 	ioctl(ui_mouse_fd, UI_SET_RELBIT, REL_Y);
 	ioctl(ui_mouse_fd, UI_SET_RELBIT, REL_WHEEL);
+
+    /* need to pass through horizontal scroll events (for example: IBM ScrollPoint) */
+    ioctl(ui_mouse_fd, UI_SET_RELBIT, REL_HWHEEL);
+    /* high res wheel events */
+    ioctl(ui_mouse_fd, UI_SET_RELBIT, REL_WHEEL_HI_RES);
+    ioctl(ui_mouse_fd, UI_SET_RELBIT, REL_HWHEEL_HI_RES);
 	
 	ioctl(ui_mouse_fd, UI_SET_KEYBIT, BTN_LEFT);
 	ioctl(ui_mouse_fd, UI_SET_KEYBIT, BTN_RIGHT);
